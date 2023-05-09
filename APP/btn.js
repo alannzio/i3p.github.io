@@ -6,6 +6,10 @@ startButton.addEventListener("click", function() {
   console.log('El video se está reproduciendo');
 });
 
+stopButton.addEventListener("click", function() {
+  video.pause();
+});
+
 video.addEventListener('error', function() {
   console.error('Error al cargar el video');
 });
