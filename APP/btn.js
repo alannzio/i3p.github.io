@@ -3,6 +3,7 @@ var startButton = document.getElementById("startButton");
 
 startButton.addEventListener("click", function() {
   video.play();
+  console.log('El video se está reproduciendo');
 });
 
 video.addEventListener('error', function() {
