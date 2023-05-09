@@ -309,64 +309,43 @@
         </form>
     </div>
     <div>
-        <!-- <button id="record-button">Grabar</button> -->
-        <video id="video" width="320" height="240" controls></video>
-        <button id="startButton">Iniciar video</button>
-        <button id="stopButton">Detener video</button>        
-        <script>
-            var video = document.getElementById("video");
-            var startButton = document.getElementById("start");
-            var stopButton = document.getElementById("stop");
-            var mediaRecorder;
-            var chunks = [];
-    
-            var constraints = {
-                audio: true,
-                video: true
-            };
-    
-            navigator.mediaDevices.getUserMedia(constraints)
-                .then(function(stream) {
-                    video.srcObject = stream;
-                    mediaRecorder = new MediaRecorder(stream);
-    
-                    startButton.addEventListener("click", function() {
-                        mediaRecorder.start();
-                    });
-    
-                    stopButton.addEventListener("click", function() {
-                        mediaRecorder.stop();
-                    });
-    
-                    mediaRecorder.ondataavailable = function(event) {
-                        chunks.push(event.data);
-                    };
-    
-                    mediaRecorder.onstop = function() {
-                        var blob = new Blob(chunks, { 'type' : 'video/mp4' });
-                        chunks = [];
-                        var formData = new FormData();
-                        formData.append('video', blob, 'video.mp4');
-    
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('POST', 'upload.php', true);
-                        xhr.onload = function() {
-                            if (xhr.status === 200) {
-                                console.log('Video enviado con éxito.');
-                                var videoURL = window.URL.createObjectURL(blob);
-                                video.src = videoURL;
-                            } else {
-                                console.error('Error al enviar el video.');
-                            }
-                        };
-                        xhr.send(formData);
-                    };
-                })
-                .catch(function(err) {
-                    console.error("Error al obtener el stream: " + err);
-                });
+ <video id="video" width="320" height="240" controls></video>
+<button id="startButton">Iniciar video</button>
+<button id="stopButton">Detener video</button>
 
-        </script>
+<script>
+    var video = document.getElementById("video");
+    var startButton = document.getElementById("startButton");
+    var stopButton = document.getElementById("stopButton");
+    var mediaRecorder;
+    var chunks = [];
+
+    var constraints = {
+        audio: true,
+        video: {
+            facingMode: { exact: "environment" }
+        }
+    };
+
+    navigator.mediaDevices.getUserMedia(constraints)
+        .then(function(stream) {
+            video.srcObject = stream;
+            mediaRecorder = new MediaRecorder(stream);
+
+            startButton.addEventListener("click", function() {
+                mediaRecorder.start();
+            });
+
+            stopButton.addEventListener("click", function() {
+                mediaRecorder.stop();
+            });
+
+            mediaRecorder.ondataavailable = function(event) {
+                chunks.push(event.data);
+            };
+        });
+</script>
+
     </div>
      <label for="button">
         <a href="index.html"><button>Salir</button></a>
