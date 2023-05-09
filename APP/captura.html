@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="captura.js">
     <link rel="shortcut icon" href="../I3/favicon_io/favicon-32x32.png" type="image/x-icon">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="upload.php">
     <title>Captura</title>
 </head>
 <body>
@@ -254,7 +255,7 @@
                     </select>
                     <input type="text" name="TE" id="Fallas17">
                   </div><br>
-                  <button id="generarPDF">Generar PDF</button>
+                  <!-- <button id="generarPDF">Generar PDF</button> -->
                 </nav>
               </div>
               
@@ -309,43 +310,12 @@
         </form>
     </div>
     <div>
- <video id="video" width="320" height="240" controls></video>
-<button id="startButton">Iniciar video</button>
-<button id="stopButton">Detener video</button>
-
-<script>
-    var video = document.getElementById("video");
-    var startButton = document.getElementById("startButton");
-    var stopButton = document.getElementById("stopButton");
-    var mediaRecorder;
-    var chunks = [];
-
-    var constraints = {
-        audio: true,
-        video: {
-            facingMode: { exact: "environment" }
-        }
-    };
-
-    navigator.mediaDevices.getUserMedia(constraints)
-        .then(function(stream) {
-            video.srcObject = stream;
-            mediaRecorder = new MediaRecorder(stream);
-
-            startButton.addEventListener("click", function() {
-                mediaRecorder.start();
-            });
-
-            stopButton.addEventListener("click", function() {
-                mediaRecorder.stop();
-            });
-
-            mediaRecorder.ondataavailable = function(event) {
-                chunks.push(event.data);
-            };
-        });
-</script>
-
+        <!-- <button id="record-button">Grabar</button> -->
+        <video id="video" width="320" height="240" controls></video>
+        <button id="startButton">Iniciar video</button>
+        <button id="stopButton">Detener video</button>
+        
+        <script src="camara.js"></script>        
     </div>
      <label for="button">
         <a href="index.html"><button>Salir</button></a>
