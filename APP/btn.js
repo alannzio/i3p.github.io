@@ -1,6 +1,6 @@
 var video = document.getElementById("video");
 var startButton = document.getElementById("startButton");
 
-botonInicio.addEventListener("click", function() {
+startButton.addEventListener("click", function() {
   video.play();
 });
