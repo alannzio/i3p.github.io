@@ -1,4 +1,0 @@
-const opciones ={
-    id:''
-    
-}
