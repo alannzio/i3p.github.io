@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captura</title>
+    <link rel="stylesheet" href="captura2.css">
+    <link rel="stylesheet" href="fecha.js">
+    <script src="folio.js"></script>
+    <style>
+      #canvas {
+        border: 1px solid #000;
+      }
+    </style>
+</head>
+<body>
+    <div class="planta">
+        <H1>AUMA TEC, S.A. DE C.V.</H1>
+        <img src="./img/picture.png" style="height: 75px; width: 100px;" align="right" id="emb">
+        <H2>QUERÉTARO</H2>
+        <H2>INSPECCIÓN TALLER</H2>
+        <button onclick="generarFolio()">Generar Folio</button>
+        <p id="folio" style="font-size: 15px;"></p>
+    </div>
+    <br><br>
+    <div id="fecha">
+        <p id="fecha-actual" align="right"></p>
+        <script src="fecha.js"></script>
+    </div>
+    <h2 id="datosh2">I.Datos generales</h2>
+    <div class="dtg">
+        <table id="DGenerales">
+            <tr>
+                <td>Linea y Tipo de transporte <input type="text" size="10"></td>
+                <td>Carga <input type="text" size="6"></td>
+                <td>Descarga <input type="text" size="10"></td>
+            </tr>
+            <tr>
+                <td>Operador <input type="text" size="24"></td>
+                <td>Nº de sello(s) entrada<input type="text" size="6"></td>
+            </tr>
+            <tr>
+                <td>Nº de Tractor <input type="text" size="7"></td>
+                <td>Nº de Placas del Tractor <input type="text" size="8"></td>
+                <td>Nº de Factura <input type="text" size="8"></td>
+            </tr>
+            <tr>
+                <td>Nº de caja/ remolque <input type="text"></td>
+                <td>Nº de placas caja/remolque <input type="text"></td>
+                <td>Nº de Factura(s) <input type="text"></td>
+            </tr>
+            <tr>
+                <td>Peso de Ingreso <input type="text"></td>
+                <td>Peso de Salida <input type="text"></td>
+            </tr>
+            <tr>
+                <td>Hora de llegada <input type="text"></td>
+                <td>Hora de Entrada <input type="text"></td>
+                <td>Hora de salida <input type="text"></td>
+            </tr>
+            <tr>
+                <td>Nº de Sello(s) Salida <input type="text"></td>
+            </tr>
+            <tr>
+                <td>Validado por Seguridad Patrimonial <input type="text"></td>
+            </tr>
+        </table>
+        <div class="insp">
+            <h2>II. INSPECCIÓN: Realizar revisión ala entrada y a la salida del transporte</h2>
+            <img src="./img/rev.jpg" alt="imagenrev" id="imagenrev">
+            <br><br>
+            <hr style="border-style: solid;">
+        </div><br>
+        <div id="partII">
+            <table>
+                <tr>
+                    <td>Concepto</td>
+                    <td style="width: 25px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspEntrada: <br> 
+                        <table with="100%">
+                            <tr style="border: none;">
+                                <td style="border: none;">Acepta</td>
+                                <td style="border: none;">Rechaza</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width: 25px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSalida:
+                        <table with="100%">
+                            <tr style="border: none;">
+                                <td style="border: none;">Acepta</td>
+                                <td style="border: none;">Rechaza</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>Comentarios Generales</td>
+                </tr>
+                <tr>
+                    <td>1.Defensa</td>
+                    <td style="border: none;">
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta1" name="AS1">
+                                <label for="Acepta1"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza1" name="AS1">
+                                <label for="Rechaza1"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td >
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta01" name="AS01">
+                                <label for="Acepta01"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza01" name="AS01">
+                                <label for="Rechaza01"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>
+                </tr>
+                <tr>
+                    <td>2.Motor</td>
+                    <td >
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta2" name="AS2">
+                                <label for="Acepta2"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza2" name="AS2">
+                                <label for="Rechaza2"></label>
+                              </td>
+                            </tr>
+                          </table>
+                     </td>      
+                     <td style="border: none;">
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta02" name="AS02">
+                                <label for="Acepta02"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza02" name="AS02">
+                                <label for="Rechaza02"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>                       
+                </tr>
+                <tr>
+                    <td>3.Cabina</td>
+                    <td >
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta3" name="AS3">
+                                <label for="Acepta3"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza3" name="AS3">
+                                <label for="Rechaza3"></label>
+                              </td>
+                            </tr>
+                          </table>
+                     </td>      
+                     <td style="border: none;">
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta03" name="AS03">
+                                <label for="Acepta03"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza03" name="AS03">
+                                <label for="Rechaza03"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>                       
+                </tr>
+                <tr>
+                    <td>4.Camarote</td>
+                    <td >
+                        <table>
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta4" name="AS4">
+                                <label for="Acepta4"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza4" name="AS4">
+                                <label for="Rechaza4"></label>
+                              </td>
+                            </tr>
+                          </table>
+                     </td>      
+                     <td>
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta04" name="AS04">
+                                <label for="Acepta04"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza04" name="AS04">
+                                <label for="Rechaza04"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>                       
+                </tr>
+                <tr>
+                    <td>5.Tanque de Combustible</td>
+                    <td >
+                        <table>
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta5" name="AS5">
+                                <label for="Acepta5"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza5" name="AS5">
+                                <label for="Rechaza5"></label>
+                              </td>
+                            </tr>
+                          </table>
+                     </td>      
+                     <td>
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta05" name="AS05">
+                                <label for="Acepta04"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza05" name="AS05">
+                                <label for="Rechaza05"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>                       
+                </tr>
+                <tr>
+                    <td>6.Eje</td>
+                    <td >
+                        <table>
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta6" name="AS6">
+                                <label for="Acepta6"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza6" name="AS6">
+                                <label for="Rechaza6"></label>
+                              </td>
+                            </tr>
+                          </table>
+                     </td>      
+                     <td>
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta06" name="AS06">
+                                <label for="Acepta06"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza06" name="AS06">
+                                <label for="Rechaza06"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>                       
+                </tr>
+                <tr>
+                    <td>7.Cilindros de Aire</td>
+                    <td >
+                        <table>
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta7" name="AS7">
+                                <label for="Acepta7"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza7" name="AS7">
+                                <label for="Rechaza7"></label>
+                              </td>
+                            </tr>
+                          </table>
+                     </td>      
+                     <td>
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta07" name="AS07">
+                                <label for="Acepta07"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza07" name="AS07">
+                                <label for="Rechaza07"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>                       
+                </tr>
+                <tr>
+                    <td>8.Mofle/Escape</td>
+                    <td >
+                        <table>
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta8" name="AS8">
+                                <label for="Acepta8"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza8" name="AS8">
+                                <label for="Rechaza8"></label>
+                              </td>
+                            </tr>
+                          </table>
+                     </td>      
+                     <td>
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta08" name="AS08">
+                                <label for="Acepta08"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza08" name="AS08">
+                                <label for="Rechaza08"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>                       
+                </tr>
+                <tr>
+                    <td>9.Condiciones de Fitosanitarias/Limpieza Exterior</td>
+                    <td >
+                        <table>
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta9" name="AS9">
+                                <label for="Acepta9"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza9" name="AS9">
+                                <label for="Rechaza9"></label>
+                              </td>
+                            </tr>
+                          </table>
+                     </td>      
+                     <td>
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta09" name="AS09">
+                                <label for="Acepta09"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza09" name="AS09">
+                                <label for="Rechaza09"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>                       
+                </tr>
+                <tr>
+                    <td>10.Paredes y Pisos exteriores de caja</td>
+                    <td >
+                        <table>
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta10" name="AS10">
+                                <label for="Acepta10"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza10" name="AS10">
+                                <label for="Rechaza10"></label>
+                              </td>
+                            </tr>
+                          </table>
+                     </td>      
+                     <td>
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta010" name="AS010">
+                                <label for="Acepta010"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza010" name="AS010">
+                                <label for="Rechaza010"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>                       
+                </tr>
+                <tr>
+                    <td>11.Quinta Rueda</td>
+                    <td >
+                        <table>
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta11" name="AS11">
+                                <label for="Acepta11"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza11" name="AS11">
+                                <label for="Rechaza11"></label>
+                              </td>
+                            </tr>
+                          </table>
+                     </td>      
+                     <td>
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta011" name="AS011">
+                                <label for="Acepta011"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza011" name="AS011">
+                                <label for="Rechaza011"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>                       
+                </tr>
+                <tr>
+                    <td>12.Chasis</td>
+                    <td >
+                        <table>
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta12" name="AS12">
+                                <label for="Acepta12"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza12" name="AS12">
+                                <label for="Rechaza12"></label>
+                              </td>
+                            </tr>
+                          </table>
+                     </td>      
+                     <td>
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta012" name="AS012">
+                                <label for="Acepta012"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza012" name="AS012">
+                                <label for="Rechaza012"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>                       
+                </tr>
+                <tr>
+                    <td>13.Llantas</td>
+                    <td >
+                        <table>
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta13" name="AS13">
+                                <label for="Acepta13"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza13" name="AS13">
+                                <label for="Rechaza13"></label>
+                              </td>
+                            </tr>
+                          </table>
+                     </td>      
+                     <td>
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta013" name="AS013">
+                                <label for="Acepta013"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza013" name="AS013">
+                                <label for="Rechaza013"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>                       
+                </tr>
+                <tr>
+                    <td>14.Puertas Traseras</td>
+                    <td >
+                        <table>
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta14" name="AS14">
+                                <label for="Acepta14"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza14" name="AS14">
+                                <label for="Rechaza14"></label>
+                              </td>
+                            </tr>
+                          </table>
+                     </td>      
+                     <td>
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta014" name="AS014">
+                                <label for="Acepta014"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza014" name="AS014">
+                                <label for="Rechaza014"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>                       
+                </tr>
+                <tr>
+                    <td>15.Sello/Fleje</td>
+                    <td >
+                        <table>
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta15" name="AS15">
+                                <label for="Acepta15"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza15" name="AS15">
+                                <label for="Rechaza15"></label>
+                              </td>
+                            </tr>
+                          </table>
+                     </td>      
+                     <td>
+                        <table style="border: none;">
+                            <tr  style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta015" name="AS015">
+                                <label for="Acepta015"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza015" name="AS015">
+                                <label for="Rechaza015"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>                       
+                </tr>
+                <tr>
+                    <td>16.Bisagras, Remaches y Tuercas</td>
+                    <td >
+                        <table>
+                            <tr style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta16" name="AS16">
+                                <label for="Acepta16"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza16" name="AS16">
+                                <label for="Rechaza16"></label>
+                              </td>
+                            </tr>
+                          </table>
+                     </td>      
+                     <td>
+                        <table style="border: none;">
+                            <tr style="border: none;">
+                              <td style="border-collapse: collapse; border: none;">
+                                <input type="radio" id="Acepta016" name="AS016">
+                                <label for="Acepta016"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza016" name="AS016">
+                                <label for="Rechaza016"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>                       
+                </tr>
+                <tr>
+                    <td>17.Techo Externo / Interno</td>
+                    <td >
+                        <table>
+                            <tr style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta17" name="AS17">
+                                <label for="Acepta17"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza17" name="AS17">
+                                <label for="Rechaza17"></label>
+                              </td>
+                            </tr>
+                          </table>
+                     </td>      
+                     <td>
+                        <table style="border: none;">
+                            <tr style="border: none;">
+                              <td style="border: none;">
+                                <input type="radio" id="Acepta017" name="AS017">
+                                <label for="Acepta017"></label>
+                              <td style="border: none;">
+                                <input type="radio" id="Rechaza017" name="AS017">
+                                <label for="Rechaza017"></label>
+                              </td>
+                            </tr>
+                          </table>                          
+                    </td>
+                    <td>
+                        <div id="camera">
+                            <video id="video"></video>
+                            <button id="snap"><i class="fas fa-camera"><img src="./img/camera-solid.svg" alt="" width="20px"></i></button>
+                            <canvas id="canvas"></canvas>
+                            <!-- <script src="photo.js"></script> -->
+                          </div>                                           
+                    </td>                       
+                </tr>
+                <tr style="border: none;">
+                    <td>Motivo del Rechazo:</td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                </tr>
+            </table>
+        </div><br><br>
+        <div class="signature-box" style="width: 400px; height: 200px;">
+          <div class="signature-title">Vigilacia Nombre y Firma</div>
+          <div class="signature-canvas-container">
+            <canvas id="signatureCanvas4" width="400" height="200"></canvas>
+            <div class="signature-overlay"></div>
+          </div>
+        </div>
+        
+        <style>
+          .signature-canvas-container {
+            position: relative;
+          }
+        
+          .signature-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid gray;
+            box-sizing: border-box;
+            pointer-events: none;
+          }
+        </style>
+        
+        <script>
+          const canvas4 = document.getElementById('signatureCanvas4');
+          const context4 = canvas4.getContext('2d');
+          let isDrawing4 = false;
+          let lastX4 = 0;
+          let lastY4 = 0;
+        
+          canvas4.addEventListener('mousedown', startDrawing4);
+          canvas4.addEventListener('mousemove', draw4);
+          canvas4.addEventListener('mouseup', stopDrawing4);
+          canvas4.addEventListener('mouseout', stopDrawing4);
+        
+          function getMouseCoordinates(event) {
+            const rect = canvas4.getBoundingClientRect();
+            return {
+              x: event.clientX - rect.left,
+              y: event.clientY - rect.top
+            };
+          }
+        
+          function startDrawing4(event) {
+            isDrawing4 = true;
+            const coordinates = getMouseCoordinates(event);
+            lastX4 = coordinates.x;
+            lastY4 = coordinates.y;
+          }
+        
+          function draw4(event) {
+            if (!isDrawing4) return;
+            const coordinates = getMouseCoordinates(event);
+            const currentX4 = coordinates.x;
+            const currentY4 = coordinates.y;
+        
+            context4.strokeStyle = 'black';
+            context4.lineWidth = 2;
+            context4.lineCap = 'round';
+            context4.beginPath();
+            context4.moveTo(lastX4, lastY4);
+            context4.lineTo(currentX4, currentY4);
+            context4.stroke();
+        
+            lastX4 = currentX4;
+            lastY4 = currentY4;
+          }
+        
+          function stopDrawing4() {
+            isDrawing4 = false;
+          }
+        </script><br><br>        
+        <div class="signature-box">
+          <div class="signature-title">Operador Nombre y Firma</div>
+          <div class="signature-canvas">
+            <canvas id="signatureCanvas5" width="400" height="200"></canvas>
+            <div class="signature-overlay"></div>
+          </div>
+        </div>
+        
+        <style>
+          .signature-canvas {
+            position: relative;
+            width: 400px;
+            height: 200px;
+            border: 1px solid #000;
+            margin-bottom: 10px;
+          }
+        
+          .signature-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.1);
+          }
+        </style>
+        
+        <script>
+          const canvas5 = document.getElementById('signatureCanvas5');
+          const context5 = canvas5.getContext('2d');
+          let isDrawing5 = false;
+          let lastX5 = 0;
+          let lastY5 = 0;
+          
+          canvas5.addEventListener('mousedown', startDrawing5);
+          canvas5.addEventListener('mousemove', draw5);
+          canvas5.addEventListener('mouseup', stopDrawing5);
+          canvas5.addEventListener('mouseout', stopDrawing5);
+          
+          function startDrawing5(event) {
+            isDrawing5 = true;
+            [lastX5, lastY5] = [event.offsetX, event.offsetY];
+          }
+          
+          function draw5(event) {
+            if (!isDrawing5) return;
+            const currentX5 = event.offsetX;
+            const currentY5 = event.offsetY;
+            
+            context5.strokeStyle = 'black';
+            context5.lineWidth = 1;
+            context5.lineCap = 'round';
+            context5.beginPath();
+            context5.moveTo(lastX5, lastY5);
+            context5.lineTo(currentX5, currentY5);
+            context5.stroke();
+          
+            [lastX5, lastY5] = [currentX5, currentY5];
+          }
+          
+          function stopDrawing5() {
+            isDrawing5 = false;
+          }
+        </script>                
+  
+    </div>
+</body>
+</html>

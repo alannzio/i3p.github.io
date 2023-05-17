@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embarques</title>
+    <link rel="stylesheet" href="captura3.css">
+    <script src="folio.js"></script>
+</head>
+<body>
+    <div class="planta">
+        <H1>AUMA TEC, S.A. DE C.V.</H1>
+        <img src="./img/picture.png" style="height: 75px; width: 100px;" align="right">
+        <H2>QUERÉTARO</H2>
+        <H2>INSPECCIÓN DE EMBARQUES</H2>
+        <button onclick="generarFolio()">Generar Folio</button>
+        <p id="folio" style="font-size: 15px;"></p>
+    </div>
+    <br><br>
+    <div id="fecha">
+        <p id="fecha-actual" align="right" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"></p>
+        <script src="fecha.js"></script>
+    </div><br>
+    <div class="I">
+        <h1>I.Datos Generales</h1>
+        <table>
+            <tr>
+                <td>Unidad</td>
+                <td><input type="text"></td>
+                <td>Folio formato inspección de tráiler</td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>Linea de transporte</td>
+                <td><input type="text"></td>
+                <td>No. Sello de salida</td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>Operador</td>
+                <td><input type="text"></td>
+                <td>No. Sellos de contigencia</td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>No. Tractor</td>
+                <td><input type="text"></td>
+                <td>Nombre de quien coloca el sello</td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>No. Caja/Remolque</td>
+                <td><input type="text"></td>
+                <td>No. Placas del tractor</td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>No.Factura(s)</td>
+                <td><input type="text"></td>
+                <td>No.Placas de la caja</td>
+                <td><input type="text"></td>
+            </tr>
+            <td>Destino</td>
+            <td><input type="text"></td>
+        </table>
+    </div>  
+    <div class="inspect">
+        <h2>II.Inspección:Realizar revisión de la caja antes de la carga de producto terminado.</h2>
+        <img src="./img/emb.jpg" alt="" id="emb">
+        <div id="Video">
+            <video id="video" autoplay></video>
+            <button id="startButton">Iniciar grabación</button>
+            <button id="stopButton">Detener grabación</button>
+            <script>
+              let stream;
+              const video = document.getElementById("video");
+              const startButton = document.getElementById("startButton");
+              const stopButton = document.getElementById("stopButton");
+        
+              startButton.addEventListener("click", async function() {
+                try {
+                  stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                      facingMode: "environment" // usa la cámara trasera
+                    },
+                    audio: true // incluye el audio
+                  });
+                  video.srcObject = stream;
+                } catch (err) {
+                  console.error("Error al acceder a la cámara trasera", err);
+                }
+              });
+        
+              stopButton.addEventListener("click", function() {
+                if (stream) {
+                  const tracks = stream.getTracks();
+                  tracks.forEach(track => track.stop());
+                  video.srcObject = null;
+                }
+              });
+            </script>
+        </div>
+        <table>
+            <tr>
+                <td>Medidas De Remolque</td>
+                <td></td>
+                <td>53´</td>
+                <td>48´</td>
+                <td><input type="radio"></td>
+            </tr>
+            <tr>
+                <td>Medidas Internas:</td>
+                <td>Alto</td>
+                <td><input type="radio" id="A1"></td>
+                <td><input type="radio" id="A2"></td>
+                <td><input type="radio"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Ancho</td>
+                <td><input type="radio" id="A3"></td>
+                <td><input type="radio"></td>
+                <td><input type="radio"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Largo</td>
+                <td><input type="radio"></td>
+                <td><input type="radio"></td>
+                <td><input type="radio"></td>
+            </tr>
+            <tr>
+                <td>Medidas Externas:</td>
+                <td>Alto</td>
+                <td><input type="radio"></td>
+                <td><input type="radio"></td>
+                <td><input type="radio"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Ancho</td>
+                <td><input type="radio"></td>
+                <td><input type="radio"></td>
+                <td><input type="radio"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Largo</td>
+                <td><input type="radio"></td>
+                <td><input type="radio"></td>
+                <td><input type="radio"></td>
+            </tr>
+        </table>
+        <br><br>
+        <table>
+            <tr>
+                <td></td>
+                <td>OK</td>
+                <td>No/Ok</td>
+                <td>Comentario</td>
+            </tr>
+            <tr>
+                <td>Revisión de techo/cielo</td>
+                <td><input type="radio"></td>
+                <td><input type="radio"></td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>Revisión de piso</td>
+                <td><input type="radio"></td>
+                <td><input type="radio"></td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>Revisión de paredes</td>
+                <td><input type="radio"></td>
+                <td><input type="radio"></td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>Plataforma: revisar piso sencillo</td>
+                <td><input type="radio"></td>
+                <td><input type="radio"></td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>Plataforma: revisar madera nueva</td>
+                <td><input type="radio"></td>
+                <td><input type="radio"></td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>Condiciones Fitosanitarias int.</td>
+                <td><input type="radio"></td>
+                <td><input type="radio"></td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>Condiciones de Limpieza int.</td>
+                <td><input type="radio"></td>
+                <td><input type="radio"></td>
+                <td><input type="text"></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td>Acepta<input type="radio"></td>
+                <td>Rechaza<input type="radio"></td>
+            </tr>
+            <tr>
+                <td>Revisado por:</td>
+                <td>Operador:</td>
+            </tr>
+            <tr>
+                <td>Nombre y firma de quien realizo la inspección</td>
+            </tr>
+        </table>
+        <canvas id="signatureCanvas" width="400" height="200" style="border: 1px solid black;"></canvas>
+<button onclick="clearCanvas()">Borrar</button>
+
+<script>
+  const canvas = document.getElementById('signatureCanvas');
+  const context = canvas.getContext('2d');
+  let isDrawing = false;
+
+  canvas.addEventListener('mousedown', startDrawing);
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', stopDrawing);
+  canvas.addEventListener('mouseout', stopDrawing);
+
+  function startDrawing(e) {
+    isDrawing = true;
+    draw(e);
+  }
+
+  function draw(e) {
+    if (!isDrawing) return;
+    context.lineWidth = 2;
+    context.lineCap = 'round';
+    context.strokeStyle = 'black';
+    context.lineTo(e.offsetX, e.offsetY);
+    context.stroke();
+    context.beginPath();
+    context.moveTo(e.offsetX, e.offsetY);
+  }
+
+  function stopDrawing() {
+    isDrawing = false;
+    context.beginPath();
+  }
+
+  function clearCanvas() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  }
+</script><br>
+    <table>
+        <tr>Nombre y firma del Operador</tr>
+    </table>
+    <canvas id="signatureCanvas2" width="400" height="200" style="border: 1px solid black;"></canvas>
+<button onclick="clearCanvas(2)">Borrar Firma 2</button>
+
+<script>
+  const canvas2 = document.getElementById('signatureCanvas2');
+  const context2 = canvas2.getContext('2d');
+  let isDrawing2 = false;
+
+  canvas2.addEventListener('mousedown', startDrawing2);
+  canvas2.addEventListener('mousemove', draw2);
+  canvas2.addEventListener('mouseup', stopDrawing2);
+  canvas2.addEventListener('mouseout', stopDrawing2);
+
+  function startDrawing2(e) {
+    isDrawing2 = true;
+    draw2(e);
+  }
+
+  function draw2(e) {
+    if (!isDrawing2) return;
+    context2.lineWidth = 2;
+    context2.lineCap = 'round';
+    context2.strokeStyle = 'black';
+    context2.lineTo(e.offsetX, e.offsetY);
+    context2.stroke();
+    context2.beginPath();
+    context2.moveTo(e.offsetX, e.offsetY);
+  }
+
+  function stopDrawing2() {
+    isDrawing2 = false;
+    context2.beginPath();
+  }
+
+  function clearCanvas(canvasNumber) {
+    if (canvasNumber === 2) {
+      context2.clearRect(0, 0, canvas2.width, canvas2.height);
+    }
+  }
+</script><br>
+    <table>
+        <tr>
+            <td>Motivo del rechazo</td>
+        </tr>
+        <tr>
+            <td><input type="text"></td>
+        </tr>
+        <tr>
+            <td>Observaciones</td>
+        </tr>
+        <tr>
+            <td><input type="text"></td>
+        </tr>
+    </table>
+    </div>
+</body>
+</html>
