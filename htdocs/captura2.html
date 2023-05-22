@@ -71,6 +71,37 @@
             <img src="./img/rev.jpg" alt="imagenrev" id="imagenrev">
             <br><br>
             <hr style="border-style: solid;">
+             <video id="video" autoplay></video>
+            <button id="startButton">Iniciar grabación</button>
+            <button id="stopButton">Detener grabación</button>
+            <script>
+              let stream;
+              const video = document.getElementById("video");
+              const startButton = document.getElementById("startButton");
+              const stopButton = document.getElementById("stopButton");
+        
+              startButton.addEventListener("click", async function() {
+                try {
+                  stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                      facingMode: "environment" // usa la cámara trasera
+                    },
+                    audio: true // incluye el audio
+                  });
+                  video.srcObject = stream;
+                } catch (err) {
+                  console.error("Error al acceder a la cámara trasera", err);
+                }
+              });
+        
+              stopButton.addEventListener("click", function() {
+                if (stream) {
+                  const tracks = stream.getTracks();
+                  tracks.forEach(track => track.stop());
+                  video.srcObject = null;
+                }
+              });
+            </script>
         </div><br>
         <div id="partII">
             <table>
