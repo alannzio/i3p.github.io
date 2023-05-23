@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="captura2.css">
     <link rel="stylesheet" href="fecha.js">
     <script src="folio.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <style>
       #canvas {
         border: 1px solid #000;
@@ -15,7 +16,7 @@
     </style>
 </head>
 <body>
-    <div class="planta">
+    <div class="planta" id="pdfContent">
         <H1>AUMA TEC, S.A. DE C.V.</H1>
         <img src="./img/picture.png" style="height: 75px; width: 100px;" align="right" id="emb">
         <H2>QUERÉTARO</H2>
@@ -71,12 +72,12 @@
             <img src="./img/rev.jpg" alt="imagenrev" id="imagenrev">
             <br><br>
             <hr style="border-style: solid;">
-             <video id="video" autoplay></video>
+            <video id="videos" autoplay></video>
             <button id="startButton">Iniciar grabación</button>
             <button id="stopButton">Detener grabación</button>
             <script>
               let stream;
-              const video = document.getElementById("video");
+              const video = document.getElementById("videos");
               const startButton = document.getElementById("startButton");
               const stopButton = document.getElementById("stopButton");
         
@@ -899,7 +900,27 @@
             isDrawing5 = false;
           }
         </script>                
-  
+    <button onclick="generatePDF()">Generar PDF</button>
+    <script>
+      function generatePDF() {
+    const pdfContent = document.getElementById('pdfContent');
+    const pdf = new jsPDF();
+
+    try {
+        // Generar el PDF a partir del contenido del div
+        pdf.fromHTML(pdfContent, 15, 15, {
+          width: 180
+        });
+
+        // Descargar el PDF
+        pdf.save('documento.pdf');
+      } catch (error) {
+        // Manejar el error
+        console.error('Error al generar el PDF:', error);
+        alert('Se produjo un error al generar el PDF.');
+      }
+    }
+    </script>
     </div>
 </body>
 </html>
